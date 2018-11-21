@@ -8,7 +8,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',{ useNewUrlParser: true 
     console.log('Connected to Mongo DB server successfully');
 
     const db = client.db('TodoApp');
-
+    const users = db.collection('Users');
     // db.collection('Todos').insertOne({
     //     text: 'Something to do',
     //     completed: false
@@ -19,7 +19,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',{ useNewUrlParser: true 
     //     console.log(JSON.stringify(result.ops, undefined, 2));
     // });
 
-    db.collection('Users').insertOne({
+    users.insertOne({
         name: 'Eric',
         age: 22,
         location: 'New Zealand'
