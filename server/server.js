@@ -1,14 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const port = process.env.PORT || 3000;
 
 const apiRouter = require('./routes/api');
 
 const app = express();
 app.use(bodyParser.json());
 
-app.listen(3000, ()=>{
-    console.log('Server listening to port 3000');
+app.listen(port, ()=>{
+    console.log(`Server listening to port ${port}`);
 });
 
 app.use('/api/v1',apiRouter);
