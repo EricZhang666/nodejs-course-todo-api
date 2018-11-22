@@ -8,6 +8,7 @@ router.get('/user/:user/todos', todoController.listByUser);
 router.post('/user/:user/todos', todoController.add);
 router.get('/todos/:id', todoController.findById);
 router.delete('/todos/:id', todoController.deleteById);
+router.patch('/todos/:id', todoController.updateById);
 
 router.get('/users', userController.list);
 router.post('/users',userController.add);
