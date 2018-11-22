@@ -9,15 +9,17 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',{ useNewUrlParser: true 
 
     const db = client.db('TodoApp');
     const todos = db.collection('Todos');
-    //deleteMany
-    // db.collection('Todos').deleteMany({text:'Something to do'}).then((result) => {
+    //deleteMany return number of doc deleted
+    // todos.deleteMany({text:'Something to do'}).then((result) => {
     //     console.log(result.result);
     // });
-    //deleteOne
-    // db.collection('Todos').deleteOne({completed:true}).then((result) => {
+
+    //deleteOne return number of doc deleted
+    // todos.deleteOne({completed:"false"}).then((result) => {
     //     console.log(result.result);
     // });
-    //findOneAndDelete
+
+    //findOneAndDelete return number of doc deleted and the deleted doc
     todos.findOneAndDelete({completed:true}).then((result) => {
         console.log(result);
     });

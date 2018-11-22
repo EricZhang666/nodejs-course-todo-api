@@ -8,15 +8,15 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',{ useNewUrlParser: true 
     console.log('Connected to Mongo DB server successfully');
 
     const db = client.db('TodoApp');
+    const users = db.collection('Users');
 
-    db.collection('Todos').findOneAndUpdate({
-        _id: new ObjectID('5b4c50a65bce1a29fd9b4309')
-    },{
-        $set:{completed: true}
-    },{
-        returnOriginal:false
-    }).then((result) => {
+    users.findOneAndUpdate({name:"Eric"},{$set:{name: "Erica"}},{returnOriginal:false})
+    .then((result)=>{
         console.log(result);
-    });
-    //client.close();
+        return users.findOneAndUpdate({name:result.value.name},{$set:{age: 28}},{returnOriginal:false});
+    }).then(result=>{
+        console.log(result);
+        client.close();})
+    .catch(err => console.log(err));
+    
 });
