@@ -18,4 +18,7 @@ app.use('*', function (req, res, next) {
     return res.status(404).send({ message: 'Page not found' })
   });
 
+app.use((err, req, res, next) => {
+    return res.status(err.status || 400).send({message: err.message ? err.message : err});
+})
 
