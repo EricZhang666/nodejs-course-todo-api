@@ -27,8 +27,10 @@ module.exports = {
     add(req, res, next){
         const body = _.pick(req.body, ['email', 'password']);
         const newUser = new User(body);
-        return newUser.save().then(result => {
-            res.send(result);
-        }).catch(next);
+        
+        return newUser.save().then(() => {
+            return newUser.generateAuthToken();
+        }).then(token => res.header('x-auth', token).send(newUser))
+        .catch(next);
     }
 }
