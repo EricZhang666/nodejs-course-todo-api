@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').load();
   }
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 const apiRouter = require('./routes/api');
 
