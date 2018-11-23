@@ -6,6 +6,8 @@ const _ = require('lodash');
 
 module.exports = {
     list(req, res, next){
+        console.log("test env");
+        console.log(process.env.MONGODB_URI);
         return Todo.find()
         .then(todos => {
             res.status(200).send(todos)
