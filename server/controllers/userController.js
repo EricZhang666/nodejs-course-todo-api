@@ -32,5 +32,11 @@ module.exports = {
             return newUser.generateAuthToken();
         }).then(token => res.header('x-auth', token).send(newUser))
         .catch(next);
+    },
+    login(req, res, next){
+        const body = _.pick(req.body, ['email', 'password']);
+        User.findByCredentials(body.email, body.password).then((user) => {
+            res.status(200).send(user);
+        }).catch(next);
     }
 }

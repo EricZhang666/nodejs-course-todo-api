@@ -14,5 +14,6 @@ router.patch('/todos/:id', authenticate, todoController.updateById);
 router.get('/users', authenticate, userController.list);
 router.post('/users',userController.add);
 router.get('/users/:id',authenticate, userController.findById);
+router.post('/login', userController.login);
 
 module.exports = router;
