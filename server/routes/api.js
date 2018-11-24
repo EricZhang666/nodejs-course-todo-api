@@ -5,8 +5,8 @@ const userController = require('../controllers/userController');
 const {authenticate} = require('../middleware/authenticate');
 
 router.get('/todos', authenticate, todoController.list);
-router.get('/user/:user/todos', authenticate, todoController.listByUser);
-router.post('/user/:user/todos', authenticate, todoController.add);
+//router.get('/user/:user/todos', authenticate, todoController.listByUser);
+router.post('/todos', authenticate, todoController.add);
 router.get('/todos/:id', authenticate, todoController.findById);
 router.delete('/todos/:id', authenticate, todoController.deleteById);
 router.patch('/todos/:id', authenticate, todoController.updateById);

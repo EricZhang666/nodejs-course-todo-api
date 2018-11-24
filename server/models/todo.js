@@ -2,10 +2,8 @@ const mongoose = require('mongoose');
 
 const Todo = mongoose.model('Todo', {
     user:{
-        type: String,
-        required: true,
-        minlength:5,
-        trim:true
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     },
     text: {
         type: String,

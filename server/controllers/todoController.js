@@ -6,28 +6,28 @@ const _ = require('lodash');
 
 module.exports = {
     list(req, res, next){
-        return Todo.find()
+        return Todo.find({user: req.user._id})
         .then(todos => {
             res.status(200).send(todos)
         })
         .catch(next);
     },
 
-    listByUser(req, res, next){
-        return Todo.find({user:req.params.user})
-        .then(todos => {
-            if(todos.length === 0){
-                res.status(404).send({message:"No todos found for this user"})
-            }else{
-                res.status(200).send(todos)
-            }
-        })
-        .catch(next);
-    },
+    // listByUser(req, res, next){
+    //     return Todo.find({user:req.params.user})
+    //     .then(todos => {
+    //         if(todos.length === 0){
+    //             res.status(404).send({message:"No todos found for this user"})
+    //         }else{
+    //             res.status(200).send(todos)
+    //         }
+    //     })
+    //     .catch(next);
+    // },
 
     findById(req, res, next){
         if(ObjectID.isValid(req.params.id)){
-            return Todo.findById(req.params.id)
+            return Todo.findOne({_id:req.params.id, user: req.user._id})
             .then((todo) => {
                 if(todo){
                     res.status(200).send(todo);
@@ -43,7 +43,7 @@ module.exports = {
 
     deleteById(req, res, next){
         if(ObjectID.isValid(req.params.id)){
-            return Todo.findByIdAndDelete(req.params.id)
+            return Todo.findOneAndDelete({_id:req.params.id, user: req.user._id})
             .then(todo => {
                 if(todo){
                     res.status(200).send(todo);
@@ -68,7 +68,7 @@ module.exports = {
             body.completedAt = null;
         }
 
-        return Todo.findByIdAndUpdate(req.params.id, {$set:body}, {new: true})
+        return Todo.findOneAndUpdate({_id:req.params.id, user: req.user._id}, {$set:body}, {new: true})
         .then(todo => {
             if(todo){
                 res.status(200).send(todo);
@@ -81,7 +81,7 @@ module.exports = {
     add(req, res, next){
         const newTodo = new Todo({
             text: req.body.text,
-            user: req.params.user
+            user: req.user._id
         });
         return newTodo.save().then(result => {
             res.send(result);
