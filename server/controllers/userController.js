@@ -40,5 +40,13 @@ module.exports = {
                 res.header('x-auth', token).send(user);
             });
         }).catch(next);
+    },
+    logout(req, res, next){
+        req.user.removeToken(req.token)
+        .then(() => {
+            res.status(200).send({message:"Logout successfully"});
+        }, () => {
+            res.status(400).send({message: "Cannot logout"});
+        });
     }
 }

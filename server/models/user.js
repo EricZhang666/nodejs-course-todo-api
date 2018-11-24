@@ -38,7 +38,7 @@ UserSchema.methods.toJSON = function(){
     const user = this;
     const userObject = user.toObject();
     return _.pick(userObject, ['_id', 'email']);
-}
+};
 
 UserSchema.methods.generateAuthToken = function(){
     const user = this;
@@ -52,7 +52,16 @@ UserSchema.methods.generateAuthToken = function(){
     return user.save().then(()=>{
         return token;
     });
-}
+};
+
+UserSchema.methods.removeToken = function(token){
+    const user = this;
+    return user.update({
+        $pull: {
+            tokens: {token}
+        }
+    });
+};
 
 UserSchema.pre('save', function(next){
     const user = this;
@@ -66,7 +75,7 @@ UserSchema.pre('save', function(next){
     }else{
         next();
     }
-})
+});
 
 UserSchema.statics.findByToken = function(token){
     const User = this;
@@ -83,7 +92,7 @@ UserSchema.statics.findByToken = function(token){
         'tokens.token': token,
         'tokens.access': 'auth'
     });
-}
+};
 
 UserSchema.statics.findByCredentials = function(email, password){
     var User = this;
@@ -103,7 +112,7 @@ UserSchema.statics.findByCredentials = function(email, password){
             });
         });
     });
-}
+};
 
 
 const User = mongoose.model('User', UserSchema);
