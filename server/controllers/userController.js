@@ -2,6 +2,7 @@ const {mongoose} = require('../db/mongoose');
 //const {Todo} = require('../models/todo');
 const {User} = require('../models/user');
 const {ObjectID} = require('mongodb');
+const _ = require('lodash');
 
 module.exports = {
     list(req, res, next){
@@ -24,12 +25,28 @@ module.exports = {
         
     },
     add(req, res, next){
-        const newUser = new User({
-            email: req.body.email,
-            password:req.body.password
-        });
-        return newUser.save().then(result => {
-            res.send(result);
+        const body = _.pick(req.body, ['email', 'password']);
+        const newUser = new User(body);
+        
+        return newUser.save().then(() => {
+            return newUser.generateAuthToken();
+        }).then(token => res.header('x-auth', token).send(newUser))
+        .catch(next);
+    },
+    login(req, res, next){
+        const body = _.pick(req.body, ['email', 'password']);
+        User.findByCredentials(body.email, body.password).then((user) => {
+            return user.generateAuthToken().then(token => {
+                res.header('x-auth', token).send(user);
+            });
         }).catch(next);
+    },
+    logout(req, res, next){
+        req.user.removeToken(req.token)
+        .then(() => {
+            res.status(200).send({message:"Logout successfully"});
+        }, () => {
+            res.status(400).send({message: "Cannot logout"});
+        });
     }
 }
