@@ -36,7 +36,9 @@ module.exports = {
     login(req, res, next){
         const body = _.pick(req.body, ['email', 'password']);
         User.findByCredentials(body.email, body.password).then((user) => {
-            res.status(200).send(user);
+            return user.generateAuthToken().then(token => {
+                res.header('x-auth', token).send(user);
+            });
         }).catch(next);
     }
 }
