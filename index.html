@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <style>
+            .container{
+                width: 60%;
+                background-color:white;
+                display: block;
+                margin: 50px auto;
+                padding:20px;
+                box-shadow: 0 3px 6px rgba(0,0,0,0.23); 
+                border-radius: 15px;
+            }
+            h1, h3, p{
+                text-align: center;
+            }
+            span{
+                color: red;
+            }
+            body{
+                background-color: powderblue;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>This is a todo app API. </h1>
+            <h3>Node.JS + MongoDB</h3>
+            <p>Register: POST /api/v1/users <br /><span>body: email, password;</span></p>
+            <p>Login: POST /api/v1/login <br /><span>body: email, password;</span></p> 
+            <p>Log out: DELETE /api/v1/logout <br /><span>header: x-auth=token;</span></p>
+            <p>Add todo: POST /api/v1/todos <br /><span>header: x-auth=token; body: text</span></p>
+            <p>View todos: GET /api/v1/todos <br /><span>header: x-auth=token;</span></p>
+            <p>Update todo: PATCH /api/v1/todos/:id <br /><span>header: x-auth=token; body: text, completed</span></p>
+            <p>Delete todo: DELETE /api/v1/todos/:id <br /><span>header: x-auth=token;</span></p>
+            <p><a href="https://github.com/EricZhang666/nodejs-course-todo-api">Github repository</a></p>
+            <p>© 2018 Lizhong Zhang All Rights Reserved</p>
+        </div>
+    </body>
+</html>
